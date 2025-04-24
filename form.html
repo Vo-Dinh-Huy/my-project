@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CASIO 590</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='form.css'>
+    <script src='form.js'></script>
+</head>
+<body>
+    <div class="form-container">
+        <h2 style="text-align:center;">FORM TÍNH TOÁN</h2><br>
+        <label style="margin-left: 48px;">a: </label><input type="text" id="a"><br>
+        <label style="margin-left: 48px;">b: </label><input type="text" id="b"><br>
+        <label>Kết quả: </label><input type="text" id="result" readonly><br>
+      
+        <div class="cal">
+          <button onclick="calculate('+')">+</button>
+          <button onclick="calculate('-')">-</button>
+          <button onclick="calculate('*')">*</button>
+          <button onclick="calculate('/')">/</button>
+          <button onclick="resetForm()">Reset</button>
+        </div>
+      
+        <p class="error" id="error-message"></p>
+      </div>
+      
+      <script>
+        const aInput = document.getElementById('a');
+        const bInput = document.getElementById('b');
+        const resultInput = document.getElementById('result');
+        const errorMsg = document.getElementById('error-message');
+
+        const defaultA = '';
+        const defaultB = '';
+
+        function calculate(op) {
+            const a = parseFloat(aInput.value);
+            const b = parseFloat(bInput.value);
+
+            if (isNaN(a) && isNaN(b)) {
+                errorMsg.textContent = "Bạn vừa nhập sai giá trị a và b. Vui lòng nhập lại!";
+                resetForm();
+                return;
+            } else if (isNaN(a)) {
+                errorMsg.textContent = "Vui lòng nhập a ở dạng số";
+                resetForm();
+                return;
+            } else if (isNaN(b)) {
+                errorMsg.textContent = "Vui lòng nhập b ở dạng số";
+                resetForm();
+                return;
+            }
+
+            errorMsg.textContent = ""; // Xoá lỗi nếu đúng
+            let result;
+            switch(op) {
+                case '+': result = a + b; break;
+                case '-': result = a - b; break;
+                case '*': result = a * b; break;
+                case '/': result = b !== 0 ? (a / b).toFixed(2) : "Không thể chia cho 0"; break;
+            }
+            resultInput.value = result;
+            }
+
+            function resetForm() {
+            aInput.value = defaultA;
+            bInput.value = defaultB;
+            resultInput.value = "";
+            }
+
+      </script>
+</body>
+</html>
